@@ -1,0 +1,51 @@
+package com.example.demo.service;
+
+import com.example.demo.entity.GamesEntity;
+import com.example.demo.entity.ModesEntity;
+import com.example.demo.entity.SapperSchemesEntity;
+import com.example.demo.entity.UserEntity;
+import com.example.demo.repository.GamesRepo;
+import com.example.demo.repository.ModesRepo;
+import com.example.demo.repository.UserRepo;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class GamesService {
+  @Autowired
+  private GamesRepo gamesRepo;
+  @Autowired
+  private UserRepo userRepo;
+  @Autowired
+  private ModesRepo modesRepo;
+  @Autowired
+  private SapperSchemesService sapperSchemesService;
+  
+
+  public GamesEntity create(int width, int height, Long userId) {
+    UserEntity user = userRepo.findById(userId).get();
+    ModesEntity mode = modesRepo.findById(Long.valueOf(1)).get();
+    SapperSchemesEntity gameScheme = sapperSchemesService.createScheme(width, height);
+    GamesEntity game = new GamesEntity(user, mode, gameScheme);
+
+    return gamesRepo.save(game);
+  }
+
+  public GamesEntity refresh(int width, int height, Long userId) {
+    UserEntity user = userRepo.findById(userId).get();
+    ModesEntity mode = modesRepo.findById(Long.valueOf(1)).get();
+    SapperSchemesEntity gameScheme = sapperSchemesService.createScheme(width, height);
+    GamesEntity game = new GamesEntity(user, mode, gameScheme);
+
+    return gamesRepo.save(game);
+  }
+
+  public GamesEntity changeIsWin(Long gameId, Boolean isWin) {
+    GamesEntity game = gamesRepo.findById(gameId).get();
+    game.setIsWin(isWin);
+    
+    return gamesRepo.save(game);
+  }
+
+}
