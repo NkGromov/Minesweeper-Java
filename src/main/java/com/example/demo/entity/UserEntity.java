@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.*;
@@ -10,7 +11,7 @@ public class UserEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   private String email;
-  private Long dateCreated;
+  private Date dateCreated;
 
   @OneToMany(cascade = javax.persistence.CascadeType.ALL, mappedBy = "user")
   private List<SessionsEntity> sessions;
@@ -29,7 +30,7 @@ public class UserEntity {
     return email;
   }
 
-  public Long getDateCreated() {
+  public Date getDateCreated() {
     return dateCreated;
   }
 

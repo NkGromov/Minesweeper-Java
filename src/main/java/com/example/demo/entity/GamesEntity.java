@@ -23,6 +23,12 @@ public class GamesEntity {
   @JoinColumn(name = "scheme_id")
   private SapperSchemesEntity sapperSchemes;
 
+  public GamesEntity(UserEntity user, ModesEntity mode, SapperSchemesEntity scheme) {
+    this.players.add(user);
+    this.mode = mode;
+    this.sapperSchemes = scheme;
+  }
+
   public Long getId() {
     return id;
   }
@@ -47,4 +53,7 @@ public class GamesEntity {
     return sapperSchemes;
   }
 
+  public void setIsWin(Boolean isWin) {
+    this.isWin = isWin;
+  }
 }

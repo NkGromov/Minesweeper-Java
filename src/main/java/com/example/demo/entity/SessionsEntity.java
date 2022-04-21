@@ -1,5 +1,7 @@
 package com.example.demo.entity;
 
+import java.util.Date;
+
 import javax.persistence.*;
 
 @Entity
@@ -10,7 +12,7 @@ public class SessionsEntity {
   @ManyToOne
   @JoinColumn(name = "user_id")
   private UserEntity user;
-  private Long date;
+  private Date date;
 
   public Long getId() {
     return id;
@@ -19,8 +21,15 @@ public class SessionsEntity {
     return user;
   }
 
-  public Long getDate() {
+  public Date getDate() {
     return date;
   }
-  
+
+  public void setUser(UserEntity user) {
+    this.user = user;
+  }
+
+  public void setDate(Date date) {
+    this.date = date;
+  }
 }

@@ -7,14 +7,17 @@ public class SapperSchemesEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
-  private Long[][] scheme;
+  private int[][] scheme;
+
+  public SapperSchemesEntity(int[][] scheme){
+    this.scheme = scheme;
+  }
 
   public Long getId() {
     return id;
   }
 
-  public Long[][] getScheme() {
+  public int[][] getScheme() {
     return scheme;
   }
-
 }
