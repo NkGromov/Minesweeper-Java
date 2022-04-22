@@ -12,7 +12,9 @@ public class ModesEntity {
   private String name;
   @OneToMany(mappedBy = "mode")
   private List<GamesEntity> games;
-
+  
+  public ModesEntity(){}
+  
   public Long getId() {
     return id;
   }

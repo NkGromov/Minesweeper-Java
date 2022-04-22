@@ -14,6 +14,8 @@ public class SessionsEntity {
   private UserEntity user;
   private Date date;
 
+  public SessionsEntity() {}
+  
   public Long getId() {
     return id;
   }

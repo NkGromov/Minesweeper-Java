@@ -11,9 +11,8 @@ public class UserService {
   @Autowired
   private UserRepo userRepo;
 
-  public Long checkUser(Long id){
-    UserEntity user = userRepo.findById(id).get();
-
+  public Long checkUser(Long id) {
+    UserEntity user = userRepo.findById(id).orElse(null);
     if(id == null || user == null){
      return this.createUser().getId();
     }

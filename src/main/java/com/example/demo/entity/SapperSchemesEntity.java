@@ -9,9 +9,7 @@ public class SapperSchemesEntity {
   private Long id;
   private int[][] scheme;
 
-  public SapperSchemesEntity(int[][] scheme){
-    this.scheme = scheme;
-  }
+  public SapperSchemesEntity(){}
 
   public Long getId() {
     return id;
@@ -19,5 +17,9 @@ public class SapperSchemesEntity {
 
   public int[][] getScheme() {
     return scheme;
+  }
+
+  public void setScheme(int[][] scheme) {
+    this.scheme = scheme;
   }
 }

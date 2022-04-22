@@ -22,6 +22,10 @@ public class UserEntity {
   @OneToMany(cascade = javax.persistence.CascadeType.ALL, mappedBy = "whoWin")
   private List<GamesEntity> winGames;
 
+  public UserEntity() {
+    this.dateCreated = new Date();
+  }
+  
   public Long getId() {
     return id;
   }

@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
@@ -24,10 +25,14 @@ public class GamesEntity {
   private SapperSchemesEntity sapperSchemes;
 
   public GamesEntity(UserEntity user, ModesEntity mode, SapperSchemesEntity scheme) {
+    this.players = new ArrayList<UserEntity>();
     this.players.add(user);
     this.mode = mode;
     this.sapperSchemes = scheme;
+    this.isWin = false;
   }
+
+  public GamesEntity() {}
 
   public Long getId() {
     return id;
@@ -37,7 +42,7 @@ public class GamesEntity {
     return isWin;
   }
 
-  public UserEntity getWhoWind() {
+  public UserEntity getWhoWin() {
     return whoWin;
   }
 
