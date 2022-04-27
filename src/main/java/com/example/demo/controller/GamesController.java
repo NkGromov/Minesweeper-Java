@@ -26,15 +26,6 @@ public class GamesController {
     }
   }
 
-  @PostMapping("/refresh")
-  public ResponseEntity refresh(@RequestParam int width, int height, Long userId, Long gameId, Boolean isWin) {
-    try {
-      return ResponseEntity.ok(gamesService.refresh(width, height, userId, gameId, isWin));
-    } catch (Exception e) {
-      return ResponseEntity.badRequest().body("error");
-    }
-  }
-
   @PutMapping("/win")
   public ResponseEntity changeIsWin(@RequestParam Long gameId, Boolean isWin) {
     try {

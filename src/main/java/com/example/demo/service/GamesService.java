@@ -33,14 +33,6 @@ public class GamesService {
     return GamesWithoutPlayers.toModel(gamesRepo.save(game));
   }
 
-  public GamesWithoutPlayers refresh(int width, int height, Long userId, Long gameId, Boolean isWin) {
-    GamesEntity game = gamesRepo.findById(gameId).get();
-    game.setIsWin(isWin);
-    gamesRepo.save(game);
-    
-    return this.create(width, height, userId);
-  }
-
   public GamesWithoutPlayers changeIsWin(Long gameId, Boolean isWin) {
     GamesEntity game = gamesRepo.findById(gameId).get();
     game.setIsWin(isWin);
