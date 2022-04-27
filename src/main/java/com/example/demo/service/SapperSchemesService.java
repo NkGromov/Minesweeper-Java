@@ -14,7 +14,7 @@ public class SapperSchemesService {
 
   public SapperSchemesEntity createScheme(int width, int height){
     SapperSchemesEntity schemeEntity = new SapperSchemesEntity();
-    long countBomb = Math.round((width * height) * 0.1);
+    int countBomb = Math.toIntExact(Math.round((width * height) * 0.1));
     int[][] scheme = new int[width][height];
     int bombNumber =  100;
 
@@ -47,6 +47,7 @@ public class SapperSchemesService {
     }
 
     schemeEntity.setScheme(scheme);
+    schemeEntity.setCountBomb(countBomb);
     return sapperSchemesRepo.save(schemeEntity);
   }
 

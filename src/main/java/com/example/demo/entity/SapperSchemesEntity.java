@@ -8,6 +8,7 @@ public class SapperSchemesEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   private int[][] scheme;
+  private int countBomb;
 
   public SapperSchemesEntity(){}
 
@@ -19,7 +20,15 @@ public class SapperSchemesEntity {
     return scheme;
   }
 
+  public int getCountBomb() {
+    return countBomb;
+  }
+
   public void setScheme(int[][] scheme) {
     this.scheme = scheme;
+  }
+
+  public void setCountBomb(int countBomb) {
+    this.countBomb = countBomb;
   }
 }
