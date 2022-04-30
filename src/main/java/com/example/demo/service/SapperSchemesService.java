@@ -1,6 +1,10 @@
 package com.example.demo.service;
 
+import java.util.List;
+import java.util.ArrayList;
+
 import com.example.demo.entity.SapperSchemesEntity;
+import com.example.demo.model.MinePosition;
 import com.example.demo.repository.SapperSchemesRepo;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,42 +17,55 @@ public class SapperSchemesService {
   private SapperSchemesRepo sapperSchemesRepo;
 
   public SapperSchemesEntity createScheme(int width, int height){
-    SapperSchemesEntity schemeEntity = new SapperSchemesEntity();
-    int countBomb = Math.toIntExact(Math.round((width * height) * 0.1));
+    int countBombs = Math.toIntExact(Math.round((width * height) * 0.1));
     int[][] scheme = new int[width][height];
     int bombNumber =  100;
+    List<MinePosition> minesPositions = this.getMines(width, countBombs);
+    SapperSchemesEntity schemeEntity = new SapperSchemesEntity();
 
-    for(int i = 0; i < scheme.length; i++){
-      int maxBombInRow = Math.round(width / 2 - 1);
-      for(int j = 0; j < scheme[i].length; j++){
-        if(maxBombInRow == 0 || countBomb == 0) break;
-        if(Math.random() > 0.5){
-          scheme[i][j] = bombNumber;
-          maxBombInRow--;
-          countBomb--;
-        }
-      }
+    for(MinePosition position : minesPositions){
+      scheme[position.y][position.x] = bombNumber;
+      this.setNearlyBombsCout(scheme, position.x,position.y);
     }
 
-    for(int i = 0; i < scheme.length; i++){
-      for(int j = 0; j < scheme[i].length; j++){
-        if(scheme[i][j] != bombNumber) continue;
-        int start = j == 0 ? 0 : 1;
-        int end = j == scheme.length - 1 ? 0 : 1;
-
-        for(int k = j-start; k <= j+end; k++) {
-          if(i > 0 && scheme[i-1][k] != bombNumber) scheme[i-1][k]++;  
-          if(i < scheme.length - 1 && scheme[i+1][k] != bombNumber) scheme[i+1][k]++;  
-        }
-
-        if(j != 0 && scheme[i][j-1] != bombNumber) scheme[i][j-1]++;  
-        if(j != scheme.length - 1 && scheme[i][j+1] != bombNumber) scheme[i][j+1]++; 
-      }
-    }
-
+    schemeEntity.setCountBombs(countBombs);
     schemeEntity.setScheme(scheme);
-    schemeEntity.setCountBomb(countBomb);
+
     return sapperSchemesRepo.save(schemeEntity);
   }
 
+
+  private int[][] setNearlyBombsCout(int[][] scheme, int x, int y){
+    int bombNumber =  100;
+    for(int rowIndex = -1; rowIndex <= 1; rowIndex++){
+      for(int collIndex = -1; collIndex <= 1; collIndex++){
+        int currentRowIndex = rowIndex + y;
+        int currentCollIndex = collIndex + x;
+        boolean minBorder = currentRowIndex >= 0 && currentCollIndex >= 0;
+        boolean maxBorder = minBorder && currentRowIndex < scheme.length && currentCollIndex < scheme[currentRowIndex].length;
+        if(maxBorder && minBorder && scheme[currentRowIndex][currentCollIndex] != bombNumber) scheme[currentRowIndex][currentCollIndex]++;
+      }
+    }
+    return scheme;
+  }
+
+  private List<MinePosition> getMines(int size, int countBombs){
+    List<MinePosition> positions = new ArrayList<MinePosition>();
+    while(positions.size() < countBombs){
+      MinePosition position = new MinePosition(this.randomNumber(size), this.randomNumber(size));
+      if(!positions.stream().anyMatch((el) -> this.positionMatch(position, el))) {
+        positions.add(position);
+      }
+
+    }
+    return positions;
+  }
+
+  private boolean positionMatch(MinePosition a, MinePosition b) {
+    return a.x == b.x && a.y == b.y;
+  }
+
+  private int randomNumber(int size) {
+    return Math.toIntExact(Math.round(Math.random() * (size - 1)));
+  }
 }
