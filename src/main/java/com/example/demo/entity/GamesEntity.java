@@ -23,6 +23,7 @@ public class GamesEntity {
   @OneToOne
   @JoinColumn(name = "scheme_id")
   private SapperSchemesEntity sapperSchemes;
+  private int score;
 
   public GamesEntity(UserEntity user, ModesEntity mode, SapperSchemesEntity scheme) {
     this.players = new ArrayList<UserEntity>();
@@ -30,6 +31,7 @@ public class GamesEntity {
     this.mode = mode;
     this.sapperSchemes = scheme;
     this.isWin = false;
+    this.score = 0;
   }
 
   public GamesEntity() {}
@@ -60,5 +62,9 @@ public class GamesEntity {
 
   public void setIsWin(Boolean isWin) {
     this.isWin = isWin;
+  }
+
+  public void setScore(int score) {
+    this.score = score;
   }
 }

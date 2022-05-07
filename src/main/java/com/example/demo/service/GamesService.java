@@ -33,9 +33,10 @@ public class GamesService {
     return GamesWithoutPlayers.toModel(gamesRepo.save(game));
   }
 
-  public GamesWithoutPlayers changeIsWin(Long gameId, Boolean isWin) {
+  public GamesWithoutPlayers changeIsWin(Long gameId, Boolean isWin, int score) {
     GamesEntity game = gamesRepo.findById(gameId).get();
     game.setIsWin(isWin);
+    game.setScore(score);
     return GamesWithoutPlayers.toModel(gamesRepo.save(game));
   }
 

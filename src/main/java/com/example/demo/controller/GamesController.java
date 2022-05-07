@@ -27,9 +27,9 @@ public class GamesController {
   }
 
   @PutMapping("/win")
-  public ResponseEntity changeIsWin(@RequestParam Long gameId, Boolean isWin) {
+  public ResponseEntity changeIsWin(@RequestParam Long gameId, boolean isWin, int score) {
     try {
-      return ResponseEntity.ok(gamesService.changeIsWin(gameId, isWin));
+      return ResponseEntity.ok(gamesService.changeIsWin(gameId, isWin, score));
     } catch (Exception e) {
       return ResponseEntity.badRequest().body("error");
     }
