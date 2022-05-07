@@ -18,11 +18,10 @@ public class SapperSchemesService {
 
   public SapperSchemesEntity createScheme(int width, int height){
     int countBombs = Math.toIntExact(Math.round((width * height) * 0.1));
-    int[][] scheme = new int[width][height];
+    int[][] scheme = new int[height][width];
     int bombNumber =  100;
-    List<MinePosition> minesPositions = this.getMines(width, countBombs);
+    List<MinePosition> minesPositions = this.getMines(width, height, countBombs);
     SapperSchemesEntity schemeEntity = new SapperSchemesEntity();
-
     for(MinePosition position : minesPositions){
       scheme[position.y][position.x] = bombNumber;
       this.setNearlyBombsCout(scheme, position.x,position.y);
@@ -49,10 +48,10 @@ public class SapperSchemesService {
     return scheme;
   }
 
-  private List<MinePosition> getMines(int size, int countBombs){
+  private List<MinePosition> getMines(int width, int height, int countBombs){
     List<MinePosition> positions = new ArrayList<MinePosition>();
     while(positions.size() < countBombs){
-      MinePosition position = new MinePosition(this.randomNumber(size), this.randomNumber(size));
+      MinePosition position = new MinePosition(this.randomNumber(width), this.randomNumber(height));
       if(!positions.stream().anyMatch((el) -> this.positionMatch(position, el))) {
         positions.add(position);
       }
